@@ -16,4 +16,4 @@ C:\>RegSave.exe --help
 
 ## Demo
 
-![/assets/demo.png](demo.png)
+![demo.png](/assets/demo.png)
