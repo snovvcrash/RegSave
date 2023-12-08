@@ -6,6 +6,13 @@ namespace RegSave
 {
     public class Interop
     {
+        [DllImport("advapi32.dll", SetLastError = true)]
+        public static extern int RegConnectRegistry(
+            string lpMachineName,
+            UIntPtr hKey,
+            out UIntPtr phkResult
+        );
+
         [DllImport("advapi32.dll", CharSet = CharSet.Auto)]
         public static extern int RegOpenKeyEx(
             UIntPtr hKey,
@@ -15,7 +22,7 @@ namespace RegSave
             out UIntPtr hkResult
         );
 
-        [DllImport("advapi32", SetLastError = true)]
+        /* [DllImport("advapi32", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool OpenProcessToken(
             IntPtr ProcessHandle,
@@ -39,7 +46,7 @@ namespace RegSave
             string lpSystemName,
             string lpName,
             out LUID lpLuid
-        );
+        ); */
 
         [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern int RegSaveKey(
@@ -53,7 +60,8 @@ namespace RegSave
             UIntPtr hKey
         );
 
-        #region structs
+        /* #region structs
+
         [StructLayout(LayoutKind.Sequential)]
         public struct LUID
         {
@@ -68,6 +76,7 @@ namespace RegSave
             public LUID Luid;
             public uint Attributes;
         }
-        #endregion
+
+        #endregion */
     }
 }
