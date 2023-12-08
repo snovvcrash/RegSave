@@ -14,13 +14,13 @@ namespace RegSave
             [Option('t', "Target", Required = true, HelpText = "Remote machine name")]
             public string Target { get; set; }
 
-            [Option('o', "OutputPath", Required = true, HelpText = "Registry hives output directory path")]
+            [Option('o', "OutputPath", HelpText = "Registry hives output directory path")]
             public string OutputPath { get; set; }
 
             [Option("backup", Default = false, HelpText = "Use REG_OPTION_BACKUP_RESTORE flag for RegOpenKeyEx")]
             public bool BackupOperators { get; set; }
 
-            [Option("acl", Default = false, HelpText = @"Show ACL for registry key SYSTEM\ControlSet001\Control\SecurePipeServers\winreg")]
+            [Option("acl", Default = false, HelpText = @"Show ACL for registry key SYSTEM\ControlSet001\Control\SecurePipeServers\winreg and exit")]
             public bool ShowAcl { get; set; }
         }
 
@@ -48,11 +48,14 @@ namespace RegSave
             {
                 if (showAcl)
                     Reg.GetAcl(remoteMachine, @"SYSTEM\ControlSet001\Control\SecurePipeServers\winreg");
-                //Privileges.EnableDisablePrivilege("SeBackupPrivilege", true);
-                //Privileges.EnableDisablePrivilege("SeRestorePrivilege", true);
-                Reg.ExportRegKey(remoteMachine, "SAM", Path.Combine(registryPath, Guid.NewGuid().ToString().ToUpper()), backupOperators);
-                Reg.ExportRegKey(remoteMachine, "SYSTEM", Path.Combine(registryPath, Guid.NewGuid().ToString().ToUpper()), backupOperators);
-                Reg.ExportRegKey(remoteMachine, "SECURITY", Path.Combine(registryPath, Guid.NewGuid().ToString().ToUpper()), backupOperators);
+                else
+                {
+                    //Privileges.EnableDisablePrivilege("SeBackupPrivilege", true);
+                    //Privileges.EnableDisablePrivilege("SeRestorePrivilege", true);
+                    Reg.ExportRegKey(remoteMachine, "SAM", Path.Combine(registryPath, Guid.NewGuid().ToString().ToUpper()), backupOperators);
+                    Reg.ExportRegKey(remoteMachine, "SYSTEM", Path.Combine(registryPath, Guid.NewGuid().ToString().ToUpper()), backupOperators);
+                    Reg.ExportRegKey(remoteMachine, "SECURITY", Path.Combine(registryPath, Guid.NewGuid().ToString().ToUpper()), backupOperators);
+                }
             }
             catch (Exception e)
             {
@@ -77,7 +80,6 @@ namespace RegSave
 
             var parser = new Parser(with => with.HelpWriter = null);
             var parserResult = parser.ParseArguments<Options>(args);
-
             try
             {
                 parserResult
