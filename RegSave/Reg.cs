@@ -81,16 +81,15 @@ namespace RegSave
             {
                 try
                 {
-                    Console.WriteLine($"[*] Identity: {KNOWN_SIDS[rule.IdentityReference.ToString()]}");
+                    Console.WriteLine($"\n[*] Identity: {KNOWN_SIDS[rule.IdentityReference.ToString()]}");
                 }
                 catch (KeyNotFoundException)
                 {
-                    Console.WriteLine($"[*] Identity: {rule.IdentityReference}");
+                    Console.WriteLine($"\n[*] Identity: {rule.IdentityReference}");
                 }
                 Console.WriteLine($@"   \_ Access Type: {rule.AccessControlType}");
                 Console.WriteLine($@"   \_ Registry Rights: {rule.RegistryRights}");
                 Console.WriteLine($@"   \_ Inherited: {rule.IsInherited}");
-                Console.WriteLine();
             }
         }
     }
